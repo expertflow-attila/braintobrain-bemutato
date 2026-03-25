@@ -621,8 +621,8 @@ section {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: var(--surface);
+  border: 1px solid rgba(217,70,239,0.25);
+  background: var(--surface-2);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -641,7 +641,7 @@ section {
   width: 22px;
   height: 22px;
   fill: none;
-  stroke: var(--text-mid);
+  stroke: var(--magenta-light);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -976,13 +976,16 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       return;
     }
 
-    var pageText = collectText();
-    if (!pageText) return;
-
-    // Limit text to ~4500 chars for API
-    if (pageText.length > 4500) {
-      pageText = pageText.substring(0, 4500);
-    }
+    var pageText = 'Kedves Anna! Ez az oldal a Te számodra készült, Nagy Attila munkája. ' +
+      'A BrainToBrain platform egy digitális tudománykommunikációs ökoszisztéma, amelyet azért hoztunk létre, ' +
+      'hogy a Te neurobiológiai kutatásaid és tudásod minél szélesebb közönséghez eljusson. ' +
+      'A platform három részből áll. Az első a személyes weboldalad, ahol a kutatásaid, publikációid és előadásaid találhatók. ' +
+      'A második egy interaktív kvíz, amellyel az emberek játékos formában tesztelhetik az agytudományi tudásukat. ' +
+      'A harmadik a NeuroLab AI, egy mesterséges intelligenciával működő platform, ahol bárki felteheti kérdéseit az agytudományról, ' +
+      'kitöltheti az agyi egészség felmérést, és megismerheti a neurodegeneratív betegségeket. ' +
+      'Az egész platform ingyenesen és azonnal használható, regisztráció nélkül. ' +
+      'A célunk az, hogy a tudomány valóban mindenkié legyen, ahogy Te is vallod: a kíváncsiság az első lépés a megértés felé. ' +
+      'Remélem, tetszeni fog!';
 
     isLoading = true;
     showIcon('loading');
