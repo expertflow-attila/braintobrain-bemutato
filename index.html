@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrainToBrain Platform — Bemutató</title>
+<meta name="description" content="A BrainToBrain digitális ökoszisztéma bemutatója. Hogyan segíti Abbas Anna Anoir tudománykommunikációs platformja a célközönségét.">
+<meta property="og:title" content="BrainToBrain Platform — Bemutató">
+<meta property="og:description" content="Ismerd meg, hogyan működik a BrainToBrain platform és miben segíthet neked.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="hu_HU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23d946ef'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 4C9.4 4 4 9.4 4 16c0 3.2 1.3 6.2 3.5 8.4.5-2.3 2-4.2 4-5.3-.3-.9-.5-1.9-.5-3C11 12.7 13.2 10 16 10s5 2.7 5 6.1c0 1-.2 2-.5 3 2 1.1 3.5 3 4 5.3C26.7 22.2 28 19.2 28 16c0-6.6-5.4-12-12-12zm-3 12.1c0-1.7.7-3.2 1.8-4.2.4-.3.8-.6 1.2-.8.4.2.8.5 1.2.8 1.1 1 1.8 2.5 1.8 4.2 0 .7-.1 1.4-.3 2-.9-.3-1.8-.5-2.7-.5s-1.8.2-2.7.5c-.2-.6-.3-1.3-.3-2z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+<style>
+@property --grad-angle {
+  syntax: '<angle>';
+  initial-value: 135deg;
+  inherits: false;
+}
+@property --glow-spread {
+  syntax: '<percentage>';
+  initial-value: 60%;
+  inherits: false;
+}
+
+:root {
+  --bg: #0e0520;
+  --surface: #1a0a2e;
+  --surface-2: #251245;
+  --surface-3: #331d5e;
+  --magenta: #d946ef;
+  --magenta-light: #e879f9;
+  --cyan: #22d3ee;
+  --cyan-light: #67e8f9;
+  --purple: #a78bfa;
+  --blue: #818cf8;
+  --gradient: linear-gradient(135deg, #d946ef, #8b5cf6, #22d3ee);
+  --gradient-h: linear-gradient(90deg, #d946ef, #8b5cf6, #22d3ee);
+  --gradient-text: linear-gradient(135deg, #e879f9, #a78bfa, #67e8f9);
+  --text: #f0eaf8;
+  --text-dim: rgba(255,255,255,0.55);
+  --text-mid: rgba(255,255,255,0.75);
+  --border: rgba(255,255,255,0.06);
+  --radius: 4px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+::selection { background: var(--magenta); color: white; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+
+/* ===== TYPOGRAPHY ===== */
+.s-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  width: fit-content;
+  margin-bottom: 0.75rem;
+}
+.s-label .num {
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(217,70,239,0.4);
+  font-size: 0.55rem;
+}
+.s-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+.grad-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(14,5,32,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: white;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: white; }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-spline {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-spline spline-viewer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+spline-viewer::part(logo) { display: none !important; }
+spline-viewer #logo { display: none !important; }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(14,5,32,0.3) 0%, rgba(14,5,32,0.6) 50%, #0e0520 100%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 2rem;
+}
+.hero-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border: 1px solid rgba(34,211,238,0.2);
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-mid);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: var(--radius);
+}
+.btn-grad {
+  background: var(--gradient);
+  color: white;
+  position: relative;
+}
+.btn-grad:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 40px rgba(217,70,239,0.35), 0 0 20px rgba(139,92,246,0.15);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-mid);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.btn-outline:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 15px rgba(34,211,238,0.1);
+}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-wide {
+  max-width: 100%;
+  padding: 6rem 0;
+}
+
+/* ===== PROBLEM SECTION ===== */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.problem-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-h);
+  opacity: 0.5;
+}
+.problem-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217,70,239,0.15);
+}
+.problem-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--magenta);
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+.problem-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+.problem-card p {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+/* ===== PLATFORMS SECTION ===== */
+.platforms {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-top: 3rem;
+}
+.platform {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.platform.reverse { direction: rtl; }
+.platform.reverse > * { direction: ltr; }
+.platform-visual {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  aspect-ratio: 16/10;
+  background: var(--surface);
+}
+.platform-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.platform-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(217,70,239,0.05), transparent 60%);
+  pointer-events: none;
+}
+.platform-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.badge-website { color: var(--magenta-light); border: 1px solid rgba(217,70,239,0.25); }
+.badge-kviz { color: var(--cyan-light); border: 1px solid rgba(34,211,238,0.25); }
+.badge-neurolab { color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+.platform-info h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1rem;
+}
+.platform-info p {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.platform-features {
+  list-style: none;
+  margin: 1.2rem 0;
+}
+.platform-features li {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  padding: 0.4rem 0;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.platform-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--magenta);
+}
+.platform-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cyan);
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: gap 0.3s;
+}
+.platform-link:hover { gap: 0.7rem; }
+
+/* ===== HOW IT WORKS ===== */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 2.8rem;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: var(--gradient-h);
+  opacity: 0.2;
+}
+.step {
+  text-align: center;
+  position: relative;
+}
+.step-num {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid rgba(217,70,239,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+.step-num::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid rgba(217,70,239,0.2);
+  z-index: -1;
+}
+.step h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.6rem;
+}
+.step p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ===== AUDIENCE ===== */
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.audience-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  transition: transform 0.3s, border-color 0.3s;
+  position: relative;
+  --glow-x: 50%;
+  --glow-y: 50%;
+}
+.audience-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-h);
+  opacity: 0.4;
+}
+.audience-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: radial-gradient(300px circle at var(--glow-x) var(--glow-y), rgba(217,70,239,0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  border-radius: var(--radius);
+}
+.audience-card:hover::after { opacity: 1; }
+.audience-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217,70,239,0.15);
+}
+.audience-icon {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.audience-card h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.6rem;
+}
+.audience-card p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+  text-align: center;
+  padding: 8rem 2rem;
+  position: relative;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(217,70,239,0.08), transparent 70%);
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.cta-section p {
+  font-size: 1rem;
+  color: var(--text-mid);
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: white;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.footer p {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.footer-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.72rem;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--cyan); }
+
+/* ===== REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero-content { padding: 1.5rem; }
+  .hero-sub { font-size: 0.95rem; }
+  .platform { grid-template-columns: 1fr; gap: 2rem; }
+  .platform.reverse { direction: ltr; }
+  .platform-visual { order: -1; }
+  .steps { grid-template-columns: 1fr; gap: 2.5rem; }
+  .steps::before { display: none; }
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(14,5,32,0.5) 0%, rgba(14,5,32,0.8) 40%, #0e0520 100%);
+  }
+  .hero h1, .hero-sub, .hero-badge {
+    text-shadow: 0 2px 20px rgba(14,5,32,0.9);
+  }
+}
+
+/* ===== TTS FLOATING BUTTON ===== */
+.tts-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 200;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  padding: 0;
+  outline: none;
+}
+.tts-btn:hover {
+  border-color: var(--magenta);
+  box-shadow: 0 4px 32px rgba(217,70,239,0.25), 0 0 16px rgba(217,70,239,0.1);
+  transform: translateY(-2px);
+}
+.tts-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--text-mid);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.3s;
+}
+.tts-btn:hover svg { stroke: var(--magenta-light); }
+.tts-btn.loading {
+  pointer-events: none;
+  border-color: rgba(217,70,239,0.3);
+}
+.tts-btn.loading svg {
+  animation: tts-pulse 1s ease-in-out infinite;
+  stroke: var(--magenta);
+}
+.tts-btn.playing {
+  border-color: var(--cyan);
+  box-shadow: 0 4px 32px rgba(34,211,238,0.2);
+}
+.tts-btn.playing svg { stroke: var(--cyan); }
+@keyframes tts-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">BrainToBrain</a>
+  <div class="nav-links">
+    <a href="#problema">Miért?</a>
+    <a href="#platformok">Platformok</a>
+    <a href="#hogyan">Hogyan?</a>
+    <a href="#kinek">Kinek?</a>
+    <a href="https://website-sable-pi-ufe7585n4w.vercel.app" target="_blank">Anna weboldala</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-spline">
+    <spline-viewer url="https://prod.spline.design/us3ALejTXl6usHZ7/scene.splinecode" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></spline-viewer>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content reveal">
+    <div class="hero-badge">Digitális tudomány-kommunikációs platform</div>
+    <h1>A tudomány<br><span class="grad-text">mindenkié</span></h1>
+    <p class="hero-sub">A BrainToBrain Abbas Anna Anoir neurobiológus kutató digitális platformja, amely az agytudományt közérthetővé, interaktívvá és élhetővé teszi mindenki számára.</p>
+    <div class="hero-cta">
+      <a href="#platformok" class="btn btn-grad">Ismerje meg &rarr;</a>
+      <a href="https://website-sable-pi-ufe7585n4w.vercel.app" target="_blank" class="btn btn-outline">Anna weboldala</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problema">
+  <div class="reveal">
+    <div class="s-label"><span class="num">01</span> A kihívás</div>
+    <h2 class="s-title">Miért van szükség<br>a <span class="grad-text">BrainToBrain</span>-re?</h2>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card reveal">
+      <div class="problem-num">01</div>
+      <h3>A tudomány távol van az emberektől</h3>
+      <p>A kutatások eredményei publikációkba zárva maradnak, a közönséget a szakkifejezések és a nyelvi akadály választja el a tudomány valós értékétől.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-num">02</div>
+      <h3>Félinformációk terjedése</h3>
+      <p>Az interneten rengeteg megbízhatatlan egészségügyi tartalom kering. Hiányoznak a hiteles, kutató által támogatott források, amelyek közérthetően közvetítik a tudományos tudásokat.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-num">03</div>
+      <h3>Passzív tartalomfogyasztás</h3>
+      <p>A hagyományos ismeretterjesztés egyirányú: olvasol, megnézel egy videót, és kész. Nincs interakció, nincs személyre szabott élmény, nincs azonnali visszajelzés.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platformok">
+  <div class="reveal">
+    <div class="s-label"><span class="num">02</span> A platform</div>
+    <h2 class="s-title">Három eszköz,<br>egy <span class="grad-text">küldetés</span></h2>
+    <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.8;max-width:600px;margin-bottom:2rem">A BrainToBrain ökoszisztéma három, egymást kiegészítő platformból áll. Mindegyik más megközelítésből segíti a látogatót az agytudomány felfedezésében.</p>
+  </div>
+
+  <div class="platforms">
+    <!-- Website -->
+    <div class="platform reveal">
+      <div class="platform-visual">
+        <img src="https://api.microlink.io/?url=https%3A%2F%2Fwebsite-sable-pi-ufe7585n4w.vercel.app&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=1200&viewport.height=750" alt="BrainToBrain Website" loading="lazy">
+      </div>
+      <div class="platform-info">
+        <span class="platform-badge badge-website">Személyes weboldal</span>
+        <h3>Abbas Anna Anoir</h3>
+        <p>Anna szakmai portfóliója, kutatási területeinek, publikációinak és előadásainak gyűjteménye. Itt ismerhetőd meg a kutatót, aki a platform mögött áll.</p>
+        <ul class="platform-features">
+          <li>9 tudományos publikáció és hivatkozás</li>
+          <li>Kutatási területek: Huntington-kór, indukált neuronok, az agy öregedése</li>
+          <li>Előadások és média megjelenések</li>
+          <li>Kapcsolatfelvétel és hírlevél</li>
+        </ul>
+        <a href="https://website-sable-pi-ufe7585n4w.vercel.app" target="_blank" class="platform-link">Megnyitás &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Kviz -->
+    <div class="platform reverse reveal">
+      <div class="platform-visual">
+        <img src="https://api.microlink.io/?url=https%3A%2F%2Fkviz-two.vercel.app&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=1200&viewport.height=750" alt="BrainToBrain Kvíz" loading="lazy">
+      </div>
+      <div class="platform-info">
+        <span class="platform-badge badge-kviz">Interaktív kvíz</span>
+        <h3>BrainToBrain Kvíz</h3>
+        <p>10 tudományos alapú kérdés az emberi agy működéséről, öregedéséről és arról, mit tehetsz azért, hogy éles maradjon a gondolkodásod.</p>
+        <ul class="platform-features">
+          <li>10 válogatott kérdés 3 nehézségi szinten</li>
+          <li>Részletes magyarázatok és "Tudtad?" tények</li>
+          <li>Interaktív animációk és vizuális visszajelzés</li>
+          <li>Eredménykártya és megosztási lehetőség</li>
+        </ul>
+        <a href="https://kviz-two.vercel.app" target="_blank" class="platform-link">Kipróbálom &rarr;</a>
+      </div>
+    </div>
+
+    <!-- NeuroLab -->
+    <div class="platform reveal">
+      <div class="platform-visual">
+        <img src="https://api.microlink.io/?url=https%3A%2F%2Fneurolab-beta.vercel.app&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=1200&viewport.height=750" alt="BrainToBrain NeuroLab" loading="lazy">
+      </div>
+      <div class="platform-info">
+        <span class="platform-badge badge-neurolab">AI platform</span>
+        <h3>NeuroLab AI</h3>
+        <p>Mesterséges intelligenciával támogatott agytudományi platform, ahol bárki interaktívan fedezhet fel tudományos tartalmakat.</p>
+        <ul class="platform-features">
+          <li>AI asszisztens: kérdezz bármit az agytudományról</li>
+          <li>8 kérdésből álló személyre szabott agyi egészség felmérés</li>
+          <li>Betegség atlasz: Alzheimer, Huntington, Parkinson, ALS</li>
+          <li>Napi tudományos érdekességek</li>
+        </ul>
+        <a href="https://neurolab-beta.vercel.app" target="_blank" class="platform-link">Felfedezés &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="hogyan">
+  <div class="reveal">
+    <div class="s-label"><span class="num">03</span> Hogyan működik</div>
+    <h2 class="s-title">Egyszerűen és<br><span class="grad-text">ingyenesen</span></h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h4>Látogasd meg</h4>
+      <p>Nyisd meg bármelyik platformot a böngésződben &mdash; nem kell regisztráció, letöltés vagy telepítés. Azonnal használhatod.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <h4>Fedezd fel</h4>
+      <p>Kvízeld magad, kérdezd az AI asszisztenst, vagy olvasd el Anna kutatási eredményeit. Minden tartalom közérthető és tudományosan megalapozott.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <h4>Vidd tovább</h4>
+      <p>Oszd meg a kvíz eredményedet, ajánlod a platformot ismerőseiddel, vagy vedd fel a kapcsolatot Annával, ha többet szeretnél tudni.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="kinek">
+  <div class="reveal">
+    <div class="s-label"><span class="num">04</span> Kinek szól</div>
+    <h2 class="s-title">Mindenkinek, aki<br><span class="grad-text">kíváncsiság</span>-ból él</h2>
+  </div>
+  <div class="audience-grid">
+    <div class="audience-card reveal">
+      <div class="audience-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d946ef"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+      </div>
+      <h4>Diákok és hallgatók</h4>
+      <p>Biológiából, orvostudományból vagy pszichológiából tanulsz? A platform segít mélyebben megérteni az agytudományt, és felkészülni a vizsgáidra is.</p>
+    </div>
+    <div class="audience-card reveal">
+      <div class="audience-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#g2)" stroke-width="1.5" stroke-linecap="round"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e879f9"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h4>Érintett családok</h4>
+      <p>Neurodegeneratív betegség érinti a családodat? Megbízható, kutató által hitelesített információkat találsz az Alzheimer-, Parkinson- és Huntington-kórról.</p>
+    </div>
+    <div class="audience-card reveal">
+      <div class="audience-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#g3)" stroke-width="1.5" stroke-linecap="round"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#818cf8"/></linearGradient></defs><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <h4>Kíváncsiak</h4>
+      <p>Érdekel, hogyan működik az agyad, miért felejtesz, vagy mit tehetsz a kognitív egészség érdekében? Nem kell tudományos előismeret &mdash; csak kíváncsiság.</p>
+    </div>
+    <div class="audience-card reveal">
+      <div class="audience-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#g4)" stroke-width="1.5" stroke-linecap="round"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d946ef"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <h4>Tudomány-kommunikátorok</h4>
+      <p>Inspirációként szolgálhat számodra, hogyan lehet a tudományt modernül, vizuálisan és interaktívan közvetíteni a mai digitális környezetben.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="reveal">
+    <h2>Fedezd fel az<br><span class="grad-text">agytudományt</span></h2>
+    <p>Válaszd ki, melyik platformmal szeretnéd kezdeni &mdash; mindegyik ingyenes és azonnal használható.</p>
+    <div class="hero-cta">
+      <a href="https://website-sable-pi-ufe7585n4w.vercel.app" target="_blank" class="btn btn-outline">Anna weboldala</a>
+      <a href="https://kviz-two.vercel.app" target="_blank" class="btn btn-grad">Kvíz indítása &rarr;</a>
+      <a href="https://neurolab-beta.vercel.app" target="_blank" class="btn btn-outline">NeuroLab AI</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">BrainToBrain</div>
+  <p>Abbas Anna Anoir &middot; Semmelweis Egyetem &middot; 2024&ndash;2026</p>
+  <div class="footer-links">
+    <a href="https://website-sable-pi-ufe7585n4w.vercel.app" target="_blank">Weboldal</a>
+    <a href="https://kviz-two.vercel.app" target="_blank">Kvíz</a>
+    <a href="https://neurolab-beta.vercel.app" target="_blank">NeuroLab</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(function(el) {
+  observer.observe(el);
+});
+
+// Glow card effect
+document.querySelectorAll('.audience-card').forEach(function(card) {
+  card.addEventListener('mousemove', function(e) {
+    var rect = this.getBoundingClientRect();
+    this.style.setProperty('--glow-x', (e.clientX - rect.left) + 'px');
+    this.style.setProperty('--glow-y', (e.clientY - rect.top) + 'px');
+  });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+<!-- TTS Button -->
+<button class="tts-btn" id="ttsBtn" aria-label="Oldal felolvasása" title="Oldal felolvasása">
+  <svg id="ttsIconPlay" viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21" fill="currentColor" stroke="none"/></svg>
+  <svg id="ttsIconPause" viewBox="0 0 24 24" style="display:none"><rect x="5" y="3" width="4" height="18" fill="currentColor" stroke="none"/><rect x="15" y="3" width="4" height="18" fill="currentColor" stroke="none"/></svg>
+  <svg id="ttsIconLoading" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="10" fill="none" stroke-dasharray="31.4 31.4" stroke-dashoffset="0"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg>
+</button>
+
+<script>
+(function() {
+  var btn = document.getElementById('ttsBtn');
+  var iconPlay = document.getElementById('ttsIconPlay');
+  var iconPause = document.getElementById('ttsIconPause');
+  var iconLoading = document.getElementById('ttsIconLoading');
+  var audio = null;
+  var isPlaying = false;
+  var isLoading = false;
+
+  function showIcon(state) {
+    iconPlay.style.display = state === 'play' ? 'block' : 'none';
+    iconPause.style.display = state === 'pause' ? 'block' : 'none';
+    iconLoading.style.display = state === 'loading' ? 'block' : 'none';
+    btn.classList.toggle('loading', state === 'loading');
+    btn.classList.toggle('playing', state === 'pause');
+  }
+
+  function collectText() {
+    var sections = document.querySelectorAll('.hero-content, #problema, #platformok, #hogyan, #kinek, .cta-section');
+    var texts = [];
+    sections.forEach(function(sec) {
+      var clone = sec.cloneNode(true);
+      clone.querySelectorAll('script, style, svg, .platform-visual').forEach(function(el) { el.remove(); });
+      var t = clone.textContent.replace(/\s+/g, ' ').trim();
+      if (t) texts.push(t);
+    });
+    return texts.join('\n\n');
+  }
+
+  function stopAudio() {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    isPlaying = false;
+    showIcon('play');
+  }
+
+  btn.addEventListener('click', function() {
+    if (isLoading) return;
+
+    if (isPlaying && audio) {
+      audio.pause();
+      isPlaying = false;
+      showIcon('play');
+      return;
+    }
+
+    if (audio && audio.paused && audio.currentTime > 0) {
+      audio.play();
+      isPlaying = true;
+      showIcon('pause');
+      return;
+    }
+
+    var pageText = collectText();
+    if (!pageText) return;
+
+    // Limit text to ~4500 chars for API
+    if (pageText.length > 4500) {
+      pageText = pageText.substring(0, 4500);
+    }
+
+    isLoading = true;
+    showIcon('loading');
+
+    fetch('https://api.elevenlabs.io/v1/text-to-speech/cgSgspJ2msm6clMCkdW9', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xi-api-key': 'sk_b886a2d0f424c64c38792bf2d2e343bb474a87a81a9ed10e'
+      },
+      body: JSON.stringify({
+        text: pageText,
+        model_id: 'eleven_flash_v2_5',
+        voice_settings: {
+          stability: 0.4,
+          similarity_boost: 0.75,
+          style: 0.4,
+          use_speaker_boost: true
+        }
+      })
+    })
+    .then(function(response) {
+      if (!response.ok) throw new Error('TTS request failed');
+      return response.blob();
+    })
+    .then(function(blob) {
+      var url = URL.createObjectURL(blob);
+      if (audio) {
+        audio.pause();
+        URL.revokeObjectURL(audio.src);
+      }
+      audio = new Audio(url);
+      audio.play();
+      isPlaying = true;
+      isLoading = false;
+      showIcon('pause');
+
+      audio.addEventListener('ended', function() {
+        isPlaying = false;
+        showIcon('play');
+      });
+    })
+    .catch(function(err) {
+      console.error('TTS error:', err);
+      isLoading = false;
+      showIcon('play');
+    });
+  });
+})();
+</script>
+</body>
+</html>
