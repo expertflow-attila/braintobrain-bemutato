@@ -430,7 +430,7 @@ section {
 .steps::before {
   content: '';
   position: absolute;
-  top: 2.8rem;
+  top: 1.75rem;
   left: 15%;
   right: 15%;
   height: 1px;
@@ -451,24 +451,17 @@ section {
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 1.1rem;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   position: relative;
   z-index: 1;
 }
-.step-num::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1px solid rgba(217,70,239,0.2);
-  z-index: -1;
+.step-num svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--magenta-light);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .step h4 {
   font-family: 'Montserrat', sans-serif;
@@ -840,17 +833,17 @@ section {
   </div>
   <div class="steps">
     <div class="step reveal">
-      <div class="step-num">1</div>
+      <div class="step-num"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       <h4>Látogasd meg</h4>
       <p>Nyisd meg bármelyik platformot a böngésződben &mdash; nem kell regisztráció, letöltés vagy telepítés. Azonnal használhatod.</p>
     </div>
     <div class="step reveal">
-      <div class="step-num">2</div>
+      <div class="step-num"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
       <h4>Fedezd fel</h4>
       <p>Kvízeld magad, kérdezd az AI asszisztenst, vagy olvasd el Anna kutatási eredményeit. Minden tartalom közérthető és tudományosan megalapozott.</p>
     </div>
     <div class="step reveal">
-      <div class="step-num">3</div>
+      <div class="step-num"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
       <h4>Vidd tovább</h4>
       <p>Oszd meg a kvíz eredményedet, ajánlod a platformot ismerőseiddel, vagy vedd fel a kapcsolatot Annával, ha többet szeretnél tudni.</p>
     </div>
@@ -1025,7 +1018,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       'A harmadik a NeuroLab AI, egy mesterséges intelligenciával működő platform, ahol bárki felteheti kérdéseit az agytudományról, ' +
       'kitöltheti az agyi egészség felmérést, és megismerheti a neurodegeneratív betegségeket. ' +
       'Az egész platform ingyenesen és azonnal használható, regisztráció nélkül. ' +
-      'A célunk az, hogy a tudomány valóban mindenkié legyen, ahogy Te is vallod: a kíváncsiság az első lépés a megértés felé. ' +
       'Remélem, tetszeni fog!';
 
     isLoading = true;
