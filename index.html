@@ -84,7 +84,10 @@ body {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.1;
-  color: white;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1.5rem;
 }
 .grad-text {
@@ -189,7 +192,10 @@ spline-viewer canvas { display: block !important; width: 100% !important; height
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 900;
   line-height: 1.05;
-  color: white;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1.5rem;
 }
 .hero-sub {
@@ -331,6 +337,15 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+.platform-visual iframe {
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
   display: block;
 }
 .platform-visual::after {
@@ -546,7 +561,10 @@ section {
   font-family: 'Montserrat', sans-serif;
   font-size: clamp(2rem, 4.5vw, 3rem);
   font-weight: 800;
-  color: white;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
   position: relative;
 }
@@ -655,14 +673,13 @@ section {
   width: 22px;
   height: 22px;
   color: var(--magenta);
-  fill: none;
-  stroke: var(--magenta);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: color 0.3s, stroke 0.3s;
+  fill: var(--magenta);
+  stroke: none;
+  transition: color 0.3s, fill 0.3s;
 }
-.tts-btn:hover svg { color: var(--magenta-light); stroke: var(--magenta-light); }
+.tts-btn:hover svg { color: var(--magenta-light); fill: var(--magenta-light); }
+.tts-btn #ttsIconLoading { fill: none; stroke: var(--magenta); stroke-width: 2; }
+.tts-btn:hover #ttsIconLoading { stroke: var(--magenta-light); }
 .tts-btn.loading {
   pointer-events: none;
   border-color: rgba(217,70,239,0.3);
@@ -670,8 +687,8 @@ section {
 }
 .tts-btn.loading svg {
   animation: tts-pulse 1s ease-in-out infinite;
-  stroke: var(--magenta);
 }
+.tts-btn.loading #ttsIconLoading { stroke: var(--magenta); }
 .tts-btn.playing {
   border-color: var(--cyan);
   box-shadow: 0 4px 32px rgba(34,211,238,0.25), 0 0 16px rgba(34,211,238,0.15);
@@ -681,7 +698,7 @@ section {
   0%, 100% { box-shadow: 0 4px 32px rgba(34,211,238,0.25), 0 0 16px rgba(34,211,238,0.15); }
   50% { box-shadow: 0 4px 36px rgba(34,211,238,0.35), 0 0 24px rgba(34,211,238,0.2); }
 }
-.tts-btn.playing svg { color: var(--cyan); stroke: var(--cyan); }
+.tts-btn.playing svg { color: var(--cyan); fill: var(--cyan); }
 @keyframes tts-pulse {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
@@ -756,7 +773,7 @@ section {
     <!-- Website -->
     <div class="platform reveal">
       <div class="platform-visual">
-        <img src="https://image.thum.io/get/width/1200/crop/750/noanimate/https://website-sable-pi-ufe7585n4w.vercel.app" alt="BrainToBrain Website" loading="lazy">
+        <iframe src="https://website-sable-pi-ufe7585n4w.vercel.app" loading="lazy" title="BrainToBrain Website"></iframe>
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-website">Személyes weboldal</span>
@@ -775,7 +792,7 @@ section {
     <!-- Kviz -->
     <div class="platform reverse reveal">
       <div class="platform-visual">
-        <img src="https://image.thum.io/get/width/1200/crop/750/noanimate/https://kviz-two.vercel.app" alt="BrainToBrain Kvíz" loading="lazy">
+        <iframe src="https://kviz-two.vercel.app" loading="lazy" title="BrainToBrain Kvíz"></iframe>
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-kviz">Interaktív kvíz</span>
@@ -794,7 +811,7 @@ section {
     <!-- NeuroLab -->
     <div class="platform reveal">
       <div class="platform-visual">
-        <img src="https://image.thum.io/get/width/1200/crop/750/noanimate/https://neurolab-beta.vercel.app" alt="BrainToBrain NeuroLab" loading="lazy">
+        <iframe src="https://neurolab-beta.vercel.app" loading="lazy" title="BrainToBrain NeuroLab"></iframe>
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-neurolab">AI platform</span>
