@@ -47,6 +47,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+html, body { width: 100%; max-width: 100%; }
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
@@ -131,6 +132,7 @@ body {
 .hero {
   position: relative;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,13 +145,16 @@ body {
   z-index: 0;
 }
 .hero-spline spline-viewer {
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
   position: absolute;
   inset: 0;
+  display: block;
 }
-spline-viewer::part(logo) { display: none !important; }
+spline-viewer::part(logo) { display: none !important; opacity: 0 !important; height: 0 !important; width: 0 !important; overflow: hidden !important; pointer-events: none !important; }
 spline-viewer #logo { display: none !important; }
+spline-viewer { --spline-watermark: none !important; }
+spline-viewer canvas { display: block !important; width: 100% !important; height: 100% !important; }
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -621,27 +626,33 @@ section {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  border: 1px solid rgba(217,70,239,0.25);
+  border: 1px solid var(--magenta);
   background: var(--surface-2);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 32px rgba(217,70,239,0.25), 0 0 16px rgba(217,70,239,0.15);
   padding: 0;
   outline: none;
+  animation: tts-glow 2.5s ease-in-out infinite;
+}
+@keyframes tts-glow {
+  0%, 100% { box-shadow: 0 4px 32px rgba(217,70,239,0.25), 0 0 16px rgba(217,70,239,0.15); }
+  50% { box-shadow: 0 4px 36px rgba(217,70,239,0.35), 0 0 24px rgba(217,70,239,0.2); }
 }
 .tts-btn:hover {
-  border-color: var(--magenta);
-  box-shadow: 0 4px 32px rgba(217,70,239,0.25), 0 0 16px rgba(217,70,239,0.1);
+  border-color: var(--magenta-light);
+  box-shadow: 0 4px 40px rgba(217,70,239,0.4), 0 0 28px rgba(217,70,239,0.25);
   transform: translateY(-2px);
+  animation: none;
 }
 .tts-btn svg {
   width: 22px;
   height: 22px;
   fill: none;
-  stroke: var(--magenta-light);
+  stroke: var(--magenta);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -651,6 +662,7 @@ section {
 .tts-btn.loading {
   pointer-events: none;
   border-color: rgba(217,70,239,0.3);
+  animation: none;
 }
 .tts-btn.loading svg {
   animation: tts-pulse 1s ease-in-out infinite;
@@ -658,7 +670,12 @@ section {
 }
 .tts-btn.playing {
   border-color: var(--cyan);
-  box-shadow: 0 4px 32px rgba(34,211,238,0.2);
+  box-shadow: 0 4px 32px rgba(34,211,238,0.25), 0 0 16px rgba(34,211,238,0.15);
+  animation: tts-glow-cyan 2.5s ease-in-out infinite;
+}
+@keyframes tts-glow-cyan {
+  0%, 100% { box-shadow: 0 4px 32px rgba(34,211,238,0.25), 0 0 16px rgba(34,211,238,0.15); }
+  50% { box-shadow: 0 4px 36px rgba(34,211,238,0.35), 0 0 24px rgba(34,211,238,0.2); }
 }
 .tts-btn.playing svg { stroke: var(--cyan); }
 @keyframes tts-pulse {
@@ -671,7 +688,7 @@ section {
 
 <!-- NAV -->
 <nav class="nav">
-  <a href="#" class="nav-brand">BrainToBrain</a>
+  <a href="#" class="nav-brand"><span class="grad-text">BrainToBrain</span></a>
   <div class="nav-links">
     <a href="#problema">Miért?</a>
     <a href="#platformok">Platformok</a>
@@ -684,7 +701,7 @@ section {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-spline">
-    <spline-viewer url="https://prod.spline.design/us3ALejTXl6usHZ7/scene.splinecode" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></spline-viewer>
+    <spline-viewer url="https://prod.spline.design/us3ALejTXl6usHZ7/scene.splinecode" style="pointer-events:none;"></spline-viewer>
     <div class="hero-overlay"></div>
   </div>
   <div class="hero-content reveal">
@@ -735,7 +752,7 @@ section {
     <!-- Website -->
     <div class="platform reveal">
       <div class="platform-visual">
-        <img src="https://api.microlink.io/?url=https%3A%2F%2Fwebsite-sable-pi-ufe7585n4w.vercel.app&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=1200&viewport.height=750" alt="BrainToBrain Website" loading="lazy">
+        <img src="https://image.thum.io/get/width/1200/crop/750/noanimate/https://website-sable-pi-ufe7585n4w.vercel.app" alt="BrainToBrain Website" loading="lazy">
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-website">Személyes weboldal</span>
@@ -754,7 +771,7 @@ section {
     <!-- Kviz -->
     <div class="platform reverse reveal">
       <div class="platform-visual">
-        <img src="https://api.microlink.io/?url=https%3A%2F%2Fkviz-two.vercel.app&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=1200&viewport.height=750" alt="BrainToBrain Kvíz" loading="lazy">
+        <img src="https://image.thum.io/get/width/1200/crop/750/noanimate/https://kviz-two.vercel.app" alt="BrainToBrain Kvíz" loading="lazy">
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-kviz">Interaktív kvíz</span>
@@ -773,7 +790,7 @@ section {
     <!-- NeuroLab -->
     <div class="platform reveal">
       <div class="platform-visual">
-        <img src="https://api.microlink.io/?url=https%3A%2F%2Fneurolab-beta.vercel.app&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=1200&viewport.height=750" alt="BrainToBrain NeuroLab" loading="lazy">
+        <img src="https://image.thum.io/get/width/1200/crop/750/noanimate/https://neurolab-beta.vercel.app" alt="BrainToBrain NeuroLab" loading="lazy">
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-neurolab">AI platform</span>
