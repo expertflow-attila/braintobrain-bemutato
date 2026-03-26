@@ -163,6 +163,9 @@ body {
 spline-viewer::part(logo) { display: none !important; opacity: 0 !important; height: 0 !important; width: 0 !important; overflow: hidden !important; pointer-events: none !important; }
 spline-viewer #logo { display: none !important; }
 spline-viewer { --spline-watermark: none !important; }
+spline-viewer a[href*="spline"] { display: none !important; }
+spline-viewer div[style*="bottom"] { display: none !important; }
+spline-viewer canvas + * { display: none !important; }
 spline-viewer canvas { display: block !important; width: 100% !important; height: 100% !important; }
 .hero-overlay {
   position: absolute;
@@ -618,20 +621,37 @@ section {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .nav-links { display: none; }
-  .hero h1 { font-size: 2.2rem; }
+  .hero h1 { font-size: clamp(1.8rem, 6vw, 2.2rem); }
   .hero-content { padding: 1.5rem; }
   .hero-sub { font-size: 0.95rem; }
+  .hero-badge { font-size: 0.5rem; padding: 0.4rem 1rem; }
+  .s-title { font-size: clamp(1.5rem, 5vw, 2.5rem); }
   .platform { grid-template-columns: 1fr; gap: 2rem; }
   .platform.reverse { direction: ltr; }
   .platform-visual { order: -1; }
+  .platform-visual iframe { width: 250%; height: 250%; transform: scale(0.4); }
   .steps { grid-template-columns: 1fr; gap: 2.5rem; }
   .steps::before { display: none; }
+  .audience-grid { grid-template-columns: 1fr; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .hero-cta { flex-direction: column; gap: 0.75rem; }
+  .hero-cta .btn { width: 100%; text-align: center; }
   .hero-overlay {
     background: linear-gradient(180deg, rgba(14,5,32,0.5) 0%, rgba(14,5,32,0.8) 40%, #0e0520 100%);
   }
   .hero h1, .hero-sub, .hero-badge {
     text-shadow: 0 2px 20px rgba(14,5,32,0.9);
   }
+  .tts-btn { bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; }
+  .tts-btn svg { width: 18px; height: 18px; }
+  .cta-section h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.6rem; }
+  .hero-sub { font-size: 0.85rem; }
+  section { padding: 4rem 1.25rem; }
+  .tts-btn { bottom: 1rem; right: 1rem; width: 44px; height: 44px; }
+  .tts-btn svg { width: 16px; height: 16px; }
 }
 
 /* ===== TTS FLOATING BUTTON ===== */
@@ -1068,6 +1088,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     });
   });
 })();
+</script>
+<script>
+(function(){function h(){document.querySelectorAll('spline-viewer').forEach(function(v){var s=v.shadowRoot;if(!s)return;s.querySelectorAll('a[href*="spline"],div[id="logo"],#logo,[class*="logo"],[style*="Built with"]').forEach(function(e){e.remove()});var all=s.querySelectorAll('div');all.forEach(function(d){if(d.textContent&&d.textContent.indexOf('Built with')!==-1)d.remove();if(d.style&&d.style.position==='absolute'&&d.style.bottom)d.style.display='none'})});requestAnimationFrame(function(){setTimeout(h,2000)})}setTimeout(h,1000);setTimeout(h,3000);setTimeout(h,6000)})();
 </script>
 </body>
 </html>
