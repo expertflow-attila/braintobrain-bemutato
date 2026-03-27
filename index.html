@@ -358,6 +358,19 @@ section {
   pointer-events: none;
   display: block;
 }
+.platform-visual .mobile-label {
+  display: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  z-index: 1;
+  padding: 1rem;
+}
 .platform-visual::after {
   content: '';
   position: absolute;
@@ -637,13 +650,15 @@ section {
   .platform { grid-template-columns: 1fr; gap: 2rem; }
   .platform.reverse { direction: ltr; }
   .platform-visual { order: -1; }
-  .platform-visual iframe { width: 250%; height: 250%; transform: scale(0.4); }
+  .platform-visual iframe { display: none; }
+  .platform-visual { display: flex; align-items: center; justify-content: center; min-height: 180px; }
+  .platform-visual .mobile-label { display: block; }
   .steps { grid-template-columns: 1fr; gap: 2.5rem; }
   .steps::before { display: none; }
   .audience-grid { grid-template-columns: 1fr; }
   .problem-grid { grid-template-columns: 1fr; }
-  .hero-cta { flex-direction: column; gap: 0.75rem; }
-  .hero-cta .btn { width: 100%; text-align: center; }
+  .hero-cta { flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+  .hero-cta .btn { flex: 1; min-width: 140px; text-align: center; }
   .hero-overlay {
     background: linear-gradient(180deg, rgba(14,5,32,0.5) 0%, rgba(14,5,32,0.8) 40%, #0e0520 100%);
   }
@@ -798,6 +813,7 @@ section {
     <div class="platform reveal">
       <div class="platform-visual">
         <iframe src="https://website-sable-pi-ufe7585n4w.vercel.app" loading="lazy" title="BrainToBrain Website"></iframe>
+        <span class="mobile-label">Abbas Anna Anoir &mdash; Weboldal</span>
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-website">Személyes weboldal</span>
@@ -817,6 +833,7 @@ section {
     <div class="platform reverse reveal">
       <div class="platform-visual">
         <iframe src="https://kviz-two.vercel.app" loading="lazy" title="BrainToBrain Kvíz"></iframe>
+        <span class="mobile-label">BrainToBrain Kviz</span>
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-kviz">Interaktív kvíz</span>
@@ -836,6 +853,7 @@ section {
     <div class="platform reveal">
       <div class="platform-visual">
         <iframe src="https://neurolab-beta.vercel.app" loading="lazy" title="BrainToBrain NeuroLab"></iframe>
+        <span class="mobile-label">NeuroLab AI</span>
       </div>
       <div class="platform-info">
         <span class="platform-badge badge-neurolab">AI platform</span>
